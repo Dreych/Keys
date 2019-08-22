@@ -1,0 +1,9 @@
+---
+
+- hosts: all
+  gather_facts: false
+  tasks:
+    - ping:
+    - name: Install Python
+      raw: test -e /usr/bin/apt && (apt -y update && apt install -y python-minimal) || (yum -y install python libselinux-python)
+      when: check_python.rc != 0
