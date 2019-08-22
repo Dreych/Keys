@@ -4,6 +4,18 @@
   gather_facts: false
   tasks:
     - ping:
-    - name: Install Python
-      raw: test -e /usr/bin/apt && (apt -y update && apt install -y python-minimal) || (yum -y install python libselinux-python)
-      when: check_python.rc != 0
+    - name: "Check if python is installed"
+      package_facts:
+        manager: "auto"
+    - name: "python test result"
+      debug:
+        msg: "python found"
+      when: "'python' in ansible_facts.packages"
+    - name: "python test result"
+      debug:
+        msg: "python NOT found"
+      when: "'python' not in ansible_facts.packages"
+    - name: install python
+      package:
+        name: python
+        state: present
