@@ -3,7 +3,6 @@
 - hosts: all
   gather_facts: false
   tasks:
-    - ping:
     - name: "Check if python is installed"
       package_facts:
         manager: "auto"
@@ -17,5 +16,5 @@
       when: "'python' not in ansible_facts.packages"
     - name: install python
       package:
-        name: python
+        name: nginx
         state: present
